@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class="dark:bg-twitter-900">
+<head>
+	<title>Tailwind Twitter</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
+
+	<script>
+	    tailwind.config = {
+	    	darkMode: 'class',
+	     	theme: {
+	        extend: {
+	          colors: {
+	            'twitter': {
+	                '50': '#f4fafe',
+	                '100': '#e8f6fe',
+	                '200': '#c7e8fc',
+	                '300': '#a5d9f9',
+	                '400': '#61bdf5',
+	                '500': '#1da1f1',
+	                '600': '#1a91d9',
+	                '700': '#1679b5',
+	                '800': '#116191',
+	                '900': '#15202B'
+	            }
+	          }
+	        }
+	      }
+	    }
+	</script>
+	<script type="text/javascript">
+		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+	      document.documentElement.classList.add('dark')
+	    } else {
+	      document.documentElement.classList.remove('dark')
+	    }
+	    localStorage.theme = 'light'
+	    localStorage.theme = 'dark'
+	    localStorage.removeItem('theme')
+	</script>
+</head>
+
+<body>
+    <%- body %>
+
+</body>
+</html>
