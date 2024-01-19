@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { postService, tagService, categoryService } = require('../../services');
+const { postService } = require('../../services');
 const AppError = require('../../utils/AppError');
 const catchError = require('../../utils/catchError');
 const { errorMsg } = require('../../constants');
