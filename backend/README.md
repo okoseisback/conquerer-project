@@ -8,6 +8,11 @@ The first step is to install npm packages with the following command.
 npm i
 ```
 
+Install sequelize-cli;
+```bash
+npm install --save-dev sequelize-cli
+```
+
 ## Environment
 Edit the file named `.env.example` as `.env`. *The db does not need to be defined in Postgresql, it will be created automatically with the following commands.
 
