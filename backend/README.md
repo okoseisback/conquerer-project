@@ -9,7 +9,7 @@ npm i
 ```
 
 ## Environment
-Edit the file named `.env.example` as `.env`.
+Edit the file named `.env.example` as `.env`. *The db does not need to be defined in Postgresql, it will be created automatically with the following commands.
 
 ```env
 PORT=3001
