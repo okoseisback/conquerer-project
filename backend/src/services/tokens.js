@@ -3,12 +3,10 @@ const moment = require('moment');
 const config = require('../config/settings');
 const { tokenTypes } = require('../config/tokens');
 const Model = require('../database/models');
+const { errorMsg } = require('../constants');
 
 const { tokens } = Model.sequelize.models;
 
-/**
- *
- */
 const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
   const payload = {
     sub: userId,
@@ -18,10 +16,6 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
   };
   return jwt.sign(payload, secret);
 };
-
-/**
- *
- */
 
 const saveToken = async (token, userId, expires, type, blacklisted = false) => {
   const tokenDoc = await tokens.create({
@@ -34,10 +28,6 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
 
   return tokenDoc;
 };
-
-/**
- *
- */
 
 const generateTokenAuth = async (user) => {
   const accessTokenExp = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
@@ -72,7 +62,7 @@ const verifyToken = async (token, type) => {
   });
 
   if (!dataToken) {
-    throw new Error('Token Not Found');
+    throw new Error(errorMsg.TOKEN_NOT_FOUND);
   }
   return dataToken;
 };

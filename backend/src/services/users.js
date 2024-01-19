@@ -16,19 +16,52 @@ const checkAvailableEmail = async (email) => {
   }
 };
 
-const checkAvailableUsername = async (username) => {
-  const dataUsername = await users.findOne({ where: { userName: username } });
-  if (dataUsername) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Username sudah digunakan');
+const checkAvailableUsername = async (userName, id) => {
+  const existingUser = await users.findOne({ where: { userName } });
+  if (existingUser) {
+    if (existingUser.id !== id) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Username sudah digunakan');
+    }
   }
 };
 
 const createUser = async (payload) => {
-  const { fullName, userName, email, password, roleId } = payload;
+  const { fullName, email, password } = payload;
   await checkAvailableEmail(email);
-  await checkAvailableUsername(userName);
-  const user = await users.create({ fullName, userName, email, password: bcrypt.hashSync(password, salt), roleId });
+  const user = await users.create({ fullName, email, password: bcrypt.hashSync(password, salt) });
   return user;
+};
+
+const updateUser = async (user, payload) => {
+  const { id } = user;
+  const { fullName, userName, birthDate } = payload;
+  await checkAvailableUsername(userName, id);
+
+  const updUser = await users.findByPk(id);
+  await updUser.update({
+    fullName,
+    userName,
+    birthDate,
+  });
+
+  return updUser;
+};
+
+const updatePassword = async (user, payload) => {
+  const { id } = user;
+  const { password } = payload;
+
+  const updUser = await users.findByPk(id);
+  await updUser.update({
+    password: bcrypt.hashSync(password, salt) 
+  });
+
+  return updUser;
+};
+
+const getUser = async (user) => {
+  const { id } = user;
+  return await users.findByPk(id);
 };
 
 const getUserByEmail = async (email) => {
@@ -94,6 +127,9 @@ const logout = async (refreshToken) => {
 };
 module.exports = {
   createUser,
+  updateUser,
+  updatePassword,
+  getUser,
   login,
   logout,
   refreshTokens,

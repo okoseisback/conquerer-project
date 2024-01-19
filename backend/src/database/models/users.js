@@ -1,3 +1,5 @@
+const transliteration = require('transliteration');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'users',
@@ -8,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -18,26 +20,36 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      roleId: {
+      birthDate: {
+        type: DataTypes.DATE,
+      },
+      location: {
+        type: DataTypes.JSON,
+      },
+      address: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
     },
     {}
   );
 
-  User.associate = (models) => {
-    // here code relation
-    User.belongsToMany(models.roles, {
-      through: 'users_roles',
-      as: 'roles',
-      foreignKey: 'userId',
-    });
+  User.beforeCreate(async (user) => {
+    const baseUsername = transliteration.slugify(user.fullName, { lowercase: true, separator: '_' });
+    let username = baseUsername;
 
+    let count = 1;
+    while (await User.findOne({ where: { userName: username } })) {
+      username = `${baseUsername}${count.toString()}`;
+      count++;
+    }
+
+    user.userName = username;
+  });
+
+  User.associate = (models) => {
     User.hasMany(models.tokens, { as: 'tokens' });
-    User.hasMany(models.categories, { as: 'categories' });
     User.hasMany(models.posts, { as: 'posts' });
-    User.hasMany(models.categories, { as: 'comments' });
+    User.hasMany(models.comments, { as: 'comments' });
   };
   return User;
 };

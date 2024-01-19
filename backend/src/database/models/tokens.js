@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       type: DataTypes.STRING,
       expires: DataTypes.DATE,
-      blacklisted: DataTypes.BOOLEAN,
     },
     {}
   );

@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const MainLayout = (props) => {
@@ -90,7 +90,7 @@ const MainLayout = (props) => {
                     <li className="md:mb-3 flex justify-center xl:justify-start">
                         <a
                             className="cursor-pointer relative bg-blue-500 w-12 xl:w-full h-12 rounded-full flex items-center justify-center hover:bg-blue-600 text-white"
-                            onClick={() => navigate("/blog/new")}
+                            onClick={() => navigate("/post/new")}
                         >
                             <svg viewBox="0 0 24 24" className="xl:hidden w-7 h-7 fill-current">
                                 <g>
@@ -105,13 +105,9 @@ const MainLayout = (props) => {
                             className="cursor-pointer text-black relative hover:bg-gray-200 dark:hover:bg-gray-700 h-12 w-12 md:h-16 md:w-16 xl:w-full xl:px-3 rounded-full flex items-center justify-center xl:justify-start"
                             onClick={() => navigate("/profile")}
                         >
-                            <img
-                                className="w-10 h-10 rounded-full"
-                                src="https://pbs.twimg.com/profile_images/1481281375835725825/rZzCEFm3_400x400.jpg"
-                            />
                             <div className="text-sm xl:ml-3 xl:block">
-                                <p className="font-bold dark:text-white">Sean</p>
-                                <p className="text-gray-500 dark:text-gray-400">@shornuk</p>
+                                <p className="font-bold dark:text-white">{auth.fullName}</p>
+                                <p className="text-gray-500 dark:text-gray-400">@{auth.userName}</p>
                             </div>
                             <svg
                                 onClick={logoutHandler}
@@ -134,34 +130,13 @@ const MainLayout = (props) => {
                     </li>
                 </ul>
             </header>
-            {/* Main column */}
             <div className="pl-20 sm:pl-24 xl:pl-80 w-full border-r border-gray-200 dark:border-gray-600 w-full lg:max-w-[984px]">
                 {props.children}
             </div>
             <div className="hidden lg:block lg:px-6 lg:w-96 shrink-0">
                 <div className="mt-8 bg-gray-100 dark:bg-white/5 rounded-xl">
                     <p className="p-4 font-bold text-xl dark:text-white">My Comments</p>
-                    <a
-                        href="#"
-                        className="p-4 hover:bg-gray-200/75 dark:hover:bg-white/10 flex transition"
-                    >
-                        <div className="mr-3 shrink-0">
-                            <div className="aspect-square bg-gray-500 w-16 rounded-xl" />
-                        </div>
-                        <div className="mr-auto">
-                            <p className="font-bold dark:text-white text-[15px]">Oktay KÖSE</p>
-                            <p className="text-xs text-gray-600 dark:text-gray-400">@okose</p>
-                            <p className="text-[13px] text-gray-600 dark:text-gray-400">
-                                Falan filan
-                            </p>
-                        </div>
-                    </a>
-                    <a
-                        href="#"
-                        className="block p-4 hover:bg-gray-200/75 dark:hover:bg-white/10 hover:rounded-b-xl transition text-blue-500"
-                    >
-                        Show more
-                    </a>
+                            ...
                 </div>
             </div>
         </div>

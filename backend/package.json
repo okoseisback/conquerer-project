@@ -1,32 +1,17 @@
 {
-  "name": "express-postgres-blog",
-  "version": "0.0.0",
+  "name": "conquerer-backend",
+  "version": "0.0.1",
   "private": true,
   "main": "src/index.js",
   "author": {
-    "email": "amilinmoh99@gmail.com",
-    "name": "amilin"
+    "email": "okoseisback@gmail.com",
+    "name": "Oktay KÖSE"
   },
-  "keywords": [
-    "expressjs",
-    "api",
-    "postgres",
-    "sequlize",
-    "rest",
-    "inspirations from Hagop Jamkojian <hagopj13@gmail.com>"
-  ],
   "scripts": {
-    "start": "pm2 start ecosystem.config.json --no-daemon",
-    "migrate": "cross-env NODE_ENV=production  npx sequelize-cli db:migrate",
-    "migrate:undo": "cross-env NODE_ENV=production  npx sequelize-cli db:migrate",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "start-test": "cross-env NODE_ENV=test nodemon src/server.js",
-    "migrate:dev": "cross-env NODE_ENV=development  npx sequelize-cli db:migrate",
-    "migrate:dev:undo": "cross-env NODE_ENV=development  npx sequelize-cli db:migrate:undo:all",
-    "migrate:test": "cross-env NODE_ENV=test  npx sequelize-cli db:migrate",
-    "migrate:test:undo": "cross-env NODE_ENV=test  npx sequelize-cli db:migrate:undo:all",
-    "seed:dev-test": "cross-env NODE_ENV=development  npx sequelize-cli db:seed:all && cross-env NODE_ENV=test npx sequelize-cli db:seed:all",
-    "seed:undo:dev-test": "cross-env NODE_ENV=development  npx sequelize-cli db:seed:undo:all && cross-env NODE_ENV=test npx sequelize-cli db:seed:undo:all"
+    "dev:db:create": "cross-env NODE_ENV=development npx sequelize-cli db:create",
+    "dev:db:migrate": "cross-env NODE_ENV=development npx sequelize-cli db:migrate",
+    "migrate:dev:undo": "cross-env NODE_ENV=development npx sequelize-cli db:migrate:undo:all"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -35,7 +20,6 @@
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^8.6.0",
-    "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-rate-limit": "^6.2.1",
     "http-errors": "~1.6.3",
@@ -51,6 +35,7 @@
     "pg-hstore": "^2.3.3",
     "pm2": "^5.1.2",
     "sequelize": "^6.6.2",
+    "transliteration": "^2.3.5",
     "winston": "^3.4.0"
   },
   "devDependencies": {

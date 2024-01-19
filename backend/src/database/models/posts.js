@@ -2,33 +2,28 @@ module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     'posts',
     {
-      categoryId: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+      },
       userId: DataTypes.INTEGER,
+      category: DataTypes.STRING,
       title: DataTypes.STRING,
-      slug: DataTypes.STRING,
-      short_desc: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      image: DataTypes.STRING,
+      body: DataTypes.TEXT,
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
+      deletedAt: DataTypes.DATE,
     },
-    {}
+    {
+      paranoid: true,
+    }
   );
 
   Post.associate = function (models) {
-    // here code relation
-    Post.belongsToMany(models.categories, { through: 'posts_categories', foreignKey: 'postId', as: 'categories' });
-    Post.belongsTo(models.users, { foreignKey: 'userId', as: 'users' });
-    Post.belongsToMany(models.tags, { through: 'posts_tags', foreignKey: 'postId', as: 'tags' });
+    Post.belongsTo(models.users, { foreignKey: 'userId', as: 'profile' });
     Post.hasMany(models.comments, { as: 'comments' });
-
-    Post.addScope('withCommentsCount', async (query) => {
-      query.include = [
-        { model: models.comments, as: 'comments', attributes: [], count: true }
-      ];
-      return query;
-    });
-    
   };
   return Post;
 };
